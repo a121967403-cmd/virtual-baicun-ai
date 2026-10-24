@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>虛擬柏村 AI 聊伴</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: system-ui, sans-serif;
+  background: #f3f5f8; color: #253244;
+}
+.app {
+  max-width: 480px; height: 100dvh; margin: auto;
+  background: white; display: flex; flex-direction: column;
+}
+header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px; border-bottom: 1px solid #e7eaf0;
+}
+.avatar {
+  width: 54px; height: 54px; border-radius: 50%;
+  object-fit: cover; object-position: center 28%;
+}
+.name { font-size: 18px; font-weight: 700; }
+.tag { color: #64748b; font-size: 12px; margin-top: 4px; }
+.ai {
+  margin-left: auto; padding: 5px 8px;
+  border-radius: 20px; background: #edf3fa;
+  color: #244d78; font-size: 11px; white-space: nowrap;
+}
+.notice {
+  text-align: center; padding: 10px;
+  background: #f8fafc; color: #64748b; font-size: 12px;
+}
+#messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+}
+.bubble {
+  width: fit-content; max-width: 88%;
+  margin-bottom: 12px; padding: 11px 14px;
+  border-radius: 16px; background: #eef2f7;
+  line-height: 1.6; overflow-wrap: anywhere;
+}
+.user {
+  margin-left: auto; background: #244d78; color: white;
+}
+form {
+  display: flex; gap: 8px; padding: 12px;
+  border-top: 1px solid #e7eaf0;
+}
+input {
+  flex: 1; min-width: 0; padding: 12px;
+  border: 1px solid #d9e0e8; border-radius: 20px;
+  font-size: 16px;
+}
+button {
+  border: 0; border-radius: 18px; padding: 0 16px;
+  background: #244d78; color: white; font-size: 15px;
+}
+footer { text-align: center; color: #94a3b8; font-size: 11px; padding: 8px; }
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <img class="avatar" src="avatar.png" alt="虛擬柏村本人照片">
+    <div>
+      <div class="name">虛擬柏村</div>
+      <div class="tag">AI 虛擬聊伴</div>
+    </div>
+    <span class="ai">AI</span>
+  </header>
+  <div class="notice">你正在與 AI 對話，並非真人即時回覆。</div>
+  <section id="messages" aria-live="polite">
+    <div class="bubble">嗨，我在這裡。怎麼了？願意跟我分享嗎？</div>
+  </section>
+  <form id="chat">
+    <input id="msg" placeholder="輸入訊息…" autocomplete="off" required>
+    <button type="submit">送出</button>
+  </form>
+  <footer>AI 聊天功能尚待串接</footer>
+</main>
+<script>
+const form = document.getElementById('chat');
+const input = document.getElementById('msg');
+const messages = document.getElementById('messages');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userBubble = document.createElement('div');
+  userBubble.className = 'bubble user';
+  userBubble.textContent = text;
+  messages.appendChild(userBubble);
+  input.value = '';
+
+  const reply = document.createElement('div');
+  reply.className = 'bubble';
+  reply.textContent =
+    '我收到你的訊息了。目前 AI 服務尚未串接，完成後就能自然地回應你。';
+  messages.appendChild(reply);
+  messages.scrollTop = messages.scrollHeight;
+});
+</script>
+</body>
+</html>
